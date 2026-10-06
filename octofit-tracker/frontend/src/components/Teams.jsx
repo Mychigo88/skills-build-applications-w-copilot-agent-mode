@@ -1,14 +1,5 @@
 import { useEffect, useState } from 'react'
-import apiBase from '../api.js'
-
-const unwrapRecords = (payload) => {
-  if (Array.isArray(payload)) return payload
-  if (!payload || typeof payload !== 'object') return []
-  if (Array.isArray(payload.results)) return payload.results
-  if (Array.isArray(payload.items)) return payload.items
-  if (Array.isArray(payload.teams)) return payload.teams
-  return []
-}
+import apiBase, { extractRecords } from '../api.js'
 
 export default function Teams() {
   const [teams, setTeams] = useState([])
@@ -17,11 +8,11 @@ export default function Teams() {
   useEffect(() => {
     async function loadTeams() {
       try {
-        const response = await fetch(`${apiBase}/api/teams/`)
+        const response = await fetch(`${apiBase}/api/teams`)
         if (!response.ok) {
           throw new Error(`Request failed with status ${response.status}`)
         }
-        setTeams(unwrapRecords(await response.json()))
+        setTeams(extractRecords(await response.json(), 'teams'))
       } catch (loadError) {
         setError(loadError.message)
       }

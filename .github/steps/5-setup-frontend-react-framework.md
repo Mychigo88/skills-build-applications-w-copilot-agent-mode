@@ -11,7 +11,7 @@ In this step, you will:
 
 ### 📖 Theory:
 
-React components turn API data into navigable views. A shared environment-aware API base URL prevents deployment details from leaking into every component, while a local fallback keeps the same interface usable outside Codespaces.
+React components turn API data into navigable views. A shared environment-aware API base URL prevents deployment details from leaking into every component, while a local fallback keeps the same interface usable outside Codespaces. To connect from Codespaces, optionally set `VITE_CODESPACE_NAME` in `octofit-tracker/frontend/.env.local` to your Codespace name; leave it unset to use `http://localhost:8000`.
 
 ### ⌨️ Activity: Implement frontend components and routing
 
@@ -30,8 +30,8 @@ React components turn API data into navigable views. A shared environment-aware 
    > - Update src/components/Workouts.jsx
    > - Use react-router-dom for navigation
    > - Use Vite environment variables via `import.meta.env`, for example `import.meta.env.VITE_CODESPACE_NAME`
-   > - Document that `VITE_CODESPACE_NAME` must be defined (for example in `.env.local`)
-   > - Use /api/activities/, /api/leaderboard/, /api/teams/, /api/users/, and /api/workouts/
+   > - Document that `VITE_CODESPACE_NAME` is optional and can be set in `.env.local`
+   > - Use /api/activities, /api/leaderboard, /api/teams, /api/users, and /api/workouts
    > - Add a safe localhost fallback if `VITE_CODESPACE_NAME` is unset
    > - Keep compatibility with paginated and array responses
    > ```
@@ -57,10 +57,10 @@ React components turn API data into navigable views. A shared environment-aware 
 
 Confirm these files include the expected endpoint paths:
 
-- `Activities.jsx` -> `/api/activities/`
-- `Leaderboard.jsx` -> `/api/leaderboard/`
-- `Teams.jsx` -> `/api/teams/`
-- `Users.jsx` -> `/api/users/`
-- `Workouts.jsx` -> `/api/workouts/`
+- `Activities.jsx` -> `/api/activities`
+- `Leaderboard.jsx` -> `/api/leaderboard`
+- `Teams.jsx` -> `/api/teams`
+- `Users.jsx` -> `/api/users`
+- `Workouts.jsx` -> `/api/workouts`
 
 </details>

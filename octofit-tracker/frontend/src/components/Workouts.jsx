@@ -1,14 +1,5 @@
 import { useEffect, useState } from 'react'
-import apiBase from '../api.js'
-
-const unwrapRecords = (payload) => {
-  if (Array.isArray(payload)) return payload
-  if (!payload || typeof payload !== 'object') return []
-  if (Array.isArray(payload.results)) return payload.results
-  if (Array.isArray(payload.items)) return payload.items
-  if (Array.isArray(payload.workouts)) return payload.workouts
-  return []
-}
+import apiBase, { extractRecords } from '../api.js'
 
 export default function Workouts() {
   const [workouts, setWorkouts] = useState([])
@@ -17,11 +8,11 @@ export default function Workouts() {
   useEffect(() => {
     async function loadWorkouts() {
       try {
-        const response = await fetch(`${apiBase}/api/workouts/`)
+        const response = await fetch(`${apiBase}/api/workouts`)
         if (!response.ok) {
           throw new Error(`Request failed with status ${response.status}`)
         }
-        setWorkouts(unwrapRecords(await response.json()))
+        setWorkouts(extractRecords(await response.json(), 'workouts'))
       } catch (loadError) {
         setError(loadError.message)
       }

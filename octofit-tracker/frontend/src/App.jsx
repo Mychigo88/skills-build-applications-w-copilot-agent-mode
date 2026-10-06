@@ -1,4 +1,4 @@
-import { Link, NavLink, Route, Routes } from 'react-router-dom'
+import { Link, Navigate, NavLink, Route, Routes } from 'react-router-dom'
 import octofitLogo from '../../../docs/octofitapp-small.png'
 import Activities from './components/Activities'
 import Leaderboard from './components/Leaderboard'
@@ -17,7 +17,7 @@ const navItems = [
 function App() {
   return (
     <div className="min-vh-100 bg-light">
-      <nav className="navbar navbar-expand-lg navbar-dark bg-success">
+      <nav className="navbar navbar-expand-lg navbar-dark bg-success" aria-label="Main navigation">
         <div className="container">
           <Link className="navbar-brand fw-semibold" to="/users">
             <img
@@ -46,7 +46,7 @@ function App() {
 
       <main className="container py-4">
         <Routes>
-          <Route path="/" element={<Users />} />
+          <Route path="/" element={<Navigate replace to="/users" />} />
           <Route path="/users" element={<Users />} />
           <Route path="/teams" element={<Teams />} />
           <Route path="/activities" element={<Activities />} />

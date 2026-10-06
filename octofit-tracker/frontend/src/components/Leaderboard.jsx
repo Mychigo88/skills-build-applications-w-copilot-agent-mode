@@ -1,14 +1,5 @@
 import { useEffect, useState } from 'react'
-import apiBase from '../api.js'
-
-const unwrapRecords = (payload) => {
-  if (Array.isArray(payload)) return payload
-  if (!payload || typeof payload !== 'object') return []
-  if (Array.isArray(payload.results)) return payload.results
-  if (Array.isArray(payload.items)) return payload.items
-  if (Array.isArray(payload.leaderboard)) return payload.leaderboard
-  return []
-}
+import apiBase, { extractRecords } from '../api.js'
 
 export default function Leaderboard() {
   const [leaderboard, setLeaderboard] = useState([])
@@ -17,11 +8,11 @@ export default function Leaderboard() {
   useEffect(() => {
     async function loadLeaderboard() {
       try {
-        const response = await fetch(`${apiBase}/api/leaderboard/`)
+        const response = await fetch(`${apiBase}/api/leaderboard`)
         if (!response.ok) {
           throw new Error(`Request failed with status ${response.status}`)
         }
-        setLeaderboard(unwrapRecords(await response.json()))
+        setLeaderboard(extractRecords(await response.json(), 'leaderboard'))
       } catch (loadError) {
         setError(loadError.message)
       }

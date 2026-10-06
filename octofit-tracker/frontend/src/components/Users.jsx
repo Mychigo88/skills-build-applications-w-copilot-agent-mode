@@ -1,14 +1,5 @@
 import { useEffect, useState } from 'react'
-import apiBase from '../api.js'
-
-const unwrapRecords = (payload) => {
-  if (Array.isArray(payload)) return payload
-  if (!payload || typeof payload !== 'object') return []
-  if (Array.isArray(payload.results)) return payload.results
-  if (Array.isArray(payload.items)) return payload.items
-  if (Array.isArray(payload.users)) return payload.users
-  return []
-}
+import apiBase, { extractRecords } from '../api.js'
 
 export default function Users() {
   const [users, setUsers] = useState([])
@@ -17,11 +8,11 @@ export default function Users() {
   useEffect(() => {
     async function loadUsers() {
       try {
-        const response = await fetch(`${apiBase}/api/users/`)
+        const response = await fetch(`${apiBase}/api/users`)
         if (!response.ok) {
           throw new Error(`Request failed with status ${response.status}`)
         }
-        setUsers(unwrapRecords(await response.json()))
+        setUsers(extractRecords(await response.json(), 'users'))
       } catch (loadError) {
         setError(loadError.message)
       }
